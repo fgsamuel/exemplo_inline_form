@@ -1,0 +1,40 @@
+{% extends 'ex_inline_form/base.html' %}
+
+{% block conteudo %}
+<h1>Formulário de Cliente</h1>
+<div class="top-buffer">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {{ form_telefone.management_form }}
+
+        {% for ft in form_telefone %}
+        <div class="inlineform">
+            <hr>
+            {{ ft }}
+        </div>
+        {% endfor %}
+
+        <div class="row">
+            <button class='btn btn-primary' type="submit">Salvar</button>
+            <a class="btn btn-danger" href={% url 'inlineform_lista' %}>Cancelar</a>
+        </div>
+
+    </form>
+</div>
+
+{% endblock conteudo %}
+
+
+{% block scripts %}
+<script type="text/javascript">
+    $(function() {
+        $('.inlineform').formset({
+            prefix: '{{ form_telefone.prefix }}',
+            addText: 'Adicionar novo Telefone',
+            deleteText: 'Remover este telefone',
+        });
+    })
+</script>
+{% endblock scripts %}

@@ -1,0 +1,33 @@
+{% extends 'ex_inline_form/base.html' %}
+
+{% block conteudo %}
+<div class="row">
+    <h1>Lista de Clientes</h1>
+</div>
+<div class="row top-buffer">
+    <a class="btn btn-primary" href={% url 'inlineform_inserir' %} role="button">Cadastrar novo Cliente</a>
+</div>
+<div class="row top-buffer">
+    <table class="table table-bordered">
+        {% for cliente in lista %}
+        <tr>
+            <td>
+                {{ cliente.nome }}
+                <ul>
+                    {% for t in cliente.telefones.all %}
+                    <li>{{ t.numero }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <a class="btn btn-sm btn-warning" href={% url 'inlineform_editar' cliente_id=cliente.id %} >Editar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td>Nenhum cliente na base</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock conteudo %}
